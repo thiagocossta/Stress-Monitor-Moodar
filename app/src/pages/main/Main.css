@@ -1,0 +1,42 @@
+section#stress-list {
+  width: 100%;
+  max-width: 580px;
+  margin: 0 auto;
+  padding: 0 30px;
+}
+
+section#stress-list article {
+  background: #fff;
+  border: 1px solid #ddd;
+  margin-top: 30px;
+}
+
+section#stress-list article header {
+  padding: 20px;
+  align-items: center;
+}
+
+section#stress-list article header .stress-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.stress-info {
+  text-align: center;
+}
+
+section#stress-list article div .stress-image {
+  display: flex;
+  align-items: center;
+  text-align-last: center;
+}
+
+.stress-image>img {
+  max-width: 100px;
+  height: auto;
+  cursor: pointer;
+}
+
+h2 {
+  font-size: 22px;
+}

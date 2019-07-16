@@ -1,13 +1,14 @@
 * {
-    margin: 0;
-    padding: 0;
-    outline: 0;
-    box-sizing: border-box;
-    font-weight: lighter;
+  margin: 0;
+  padding: 0;
+  outline: 0;
+  box-sizing: border-box;
+  font-weight: lighter;
+  text-align-last: center;
 }
 
 body {
-    background: #fafafa;
-    font-family: Arial, Helvetica, sans-serif;
-    -webkit-font-smoothing: antialiased !important;
+  background: #fafafa;
+  font-family: Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased !important;
 }
