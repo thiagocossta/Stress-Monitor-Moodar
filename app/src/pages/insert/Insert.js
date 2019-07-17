@@ -1,12 +1,77 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable react/destructuring-assignment */
+import './Insert.css';
+
 import React, { Component } from 'react';
+
+import moment from 'moment';
+import api from '../../services/api';
 
 // eslint-disable-next-line react/prefer-stateless-function
 class Insert extends Component {
-  render() {
-    return (
-      <h1>Insert</h1>
-    );
-  }
+   state = {
+     status: 0,
+     date: '',
+     description: '',
+   };
+
+
+    handleSubmit = async (e) => {
+      e.preventDefault();
+      const data = new FormData();
+
+      data.append('status', this.state.status);
+      data.append('date', moment(this.state.date).format('DD/MM/YYYY'));
+      data.append('description', this.state.description);
+      await api.post('save', data);
+      this.props.history.push('/');
+    }
+
+    handleClick = (e) => {
+      this.state.status = e.target.value;
+      console.log(this.state.status);
+    }
+
+    handleChange = (e) => {
+      this.setState({ [e.target.name]: e.target.value });
+    }
+
+    render() {
+      return (
+        <div className="stress-container">
+          <h1>Cadastrar novo Mood</h1>
+          <br />
+          <h5>selecione seu nível de estresse, a data e uma descrição</h5>
+          <form id="new-stress" onSubmit={this.handleSubmit}>
+            <div className="form-button">
+              <button name="status" type="button" value="0" onClick={this.handleClick}>0</button>
+              <button name="status" type="button" value="20" onClick={this.handleClick}>20</button>
+              <button name="status" type="button" value="40" onClick={this.handleClick}>40</button>
+              <button name="status" type="button" value="60" onClick={this.handleClick}>60</button>
+              <button name="status" type="button" value="80" onClick={this.handleClick}>80</button>
+              <button name="status" type="button" value="100" onClick={this.handleClick}>100</button>
+            </div>
+
+            <input
+              type="date"
+              name="date"
+              placeholder="data"
+              onChange={this.handleChange}
+            />
+
+            <input
+              type="text"
+              name="description"
+              placeholder="description"
+              onChange={this.handleChange}
+            />
+
+            <button type="submit">Cadastrar</button>
+          </form>
+        </div>
+
+      );
+    }
 }
 
 export default Insert;

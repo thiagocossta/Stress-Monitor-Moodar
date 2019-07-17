@@ -1,42 +1,101 @@
-section#stress-list {
+section#main__list {
   width: 100%;
   max-width: 580px;
   margin: 0 auto;
   padding: 0 30px;
 }
 
-section#stress-list article {
+section#main__list article {
   background: #fff;
   border: 1px solid #ddd;
   margin-top: 30px;
 }
 
-section#stress-list article header {
+section#main__list article header {
   padding: 20px;
   align-items: center;
 }
 
-section#stress-list article header .stress-info {
+section#main__list article header .main__info {
+  width: 100%;
+  max-width: 580px;
+  padding: 15px;
+  background: #fff;
   display: flex;
   flex-direction: column;
 }
 
-.stress-info {
-  text-align: center;
-}
-
-section#stress-list article div .stress-image {
+section#main__list article header .main__content {
+  padding: 0 10px;
   display: flex;
   align-items: center;
-  text-align-last: center;
+  justify-content: space-between;
+  margin-top: 15px;
+  cursor: pointer;
+  background-color: rgba(255, 162, 182, 0.521);
 }
 
-.stress-image>img {
-  max-width: 100px;
-  height: auto;
+form#main__buttons-stress {
+  width: 100%;
+  max-width: 580px;
+  background: #fff;
+  font: lighter;
+  display: flex;
+  flex-direction: column;
+}
+
+
+form#main__buttons-stress button {
+  padding: 8px 15px;
+  border-radius: 4px;
+  border: 1px solid gray;
+  background: rgba(255, 255, 255, 0.158);
+  color: rgb(138, 138, 138);
   cursor: pointer;
+}
+
+form#main__buttons-stress button:hover {
+  background: rgba(106, 178, 238, 0.623);
+  color: rgba(0, 0, 0, 0.747);
 }
 
 h2 {
   font-size: 22px;
+}
+
+form#main__buttons-stress div {
+  display: flex;
+  align-content: space-between;
+}
+
+form#main__buttons-stress div button {
+  display: block;
+  width: 50px;
+  height: 50px;
+  border: 2px solid #f5f5f5;
+  border-radius: 50%;
+  color: #f5f5f5;
+  text-decoration: none;
+  background: rgba(250, 132, 132, 0.849);
+  box-shadow: 0 0 3px gray;
+  align-items: center;
+  margin: 0 auto;
+  margin-bottom: 10px;
+}
+
+form#main__buttons-stress div button:hover {
+  background: #f86565fb;
+}
+
+.main__buttons {
+  margin-bottom: 20px;
+}
+
+h1 {
+  font-size: 30px;
+}
+
+.main__link {
+  text-decoration: none;
+  color: rgb(68, 68, 68);
 }

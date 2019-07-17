@@ -16,14 +16,9 @@ export default function Navbar() {
           </Link>
         </div>
         <div>
-          <li>
-            <Link to="/insert">
-              <h2>Inserir</h2>
-            </Link>
-            <Link to="/">
-              <h2>Logout</h2>
-            </Link>
-          </li>
+          <Link className="navbar__link" to="/insert">
+            <h2>Inserir</h2>
+          </Link>
         </div>
       </div>
     </header>

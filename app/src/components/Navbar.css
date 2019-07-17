@@ -1,7 +1,7 @@
 header#main-navbar {
   background: #fff;
   height: 75px;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 2px solid #ddd;
 }
 
 header#main-navbar .navbar-content {
@@ -9,7 +9,7 @@ header#main-navbar .navbar-content {
   max-width: 980px;
   margin: 0 auto;
   height: 75px;
-  padding: 0 30px;
+  padding: 0 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -42,20 +42,7 @@ header#main-navbar .navbar-logo {
   height: auto;
 }
 
-a {
+.navbar__link {
   text-decoration: none;
   color: rgb(68, 68, 68);
-  margin: 10px;
-}
-
-ul {
-  list-style: none;
-}
-
-li {
-  display: inline;
-  padding: 5px;
-  display: flex;
-  align-content: space-between;
-  list-style: none;
 }
