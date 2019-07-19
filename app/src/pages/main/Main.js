@@ -1,22 +1,35 @@
-/* eslint-disable no-underscore-dangle */
+/* eslint-disable import/order */
+/* eslint-disable block-spacing */
 /* eslint-disable react/destructuring-assignment */
+/* eslint-disable react/prop-types */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable no-underscore-dangle */
 import './Main.css';
+
+import * as stressActions from '../../actions';
 
 import React, { Component } from 'react';
 
 import { Link } from 'react-router-dom';
-import moment from 'moment';
 import api from '../../services/api';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import moment from 'moment';
 
 class Main extends Component {
   state = {
-    stress: [],
     stressSelector: 0,
   };
 
+  // constructor(props) {
+  //   super(props);
+  //   console.log(props);
+  // }
+
   async componentDidMount() {
-    const response = await api.get('/');
-    this.setState({ stress: response.data });
+    const result = await api.get('/');
+    this.props.setStresses(result.data);
   }
 
   handleSubmit = async (e) => {
@@ -27,12 +40,23 @@ class Main extends Component {
     await api.put('/updateCurrentStatus', data);
   }
 
+  handleCardClick = (stress) => {
+    this.props.setSelectedStress(stress);
+    this.props.history.push('/stress');
+  };
+
   handleChange = (e) => {
     this.setState({ stressSelector: e.target.stressSelector });
   }
 
   handleClick = (e) => {
     this.setState({ stressSelector: e.target.value });
+  }
+
+  getCurrentStress = () => {
+    this.props.stresses.filter(
+      stress => (moment(stress.date).format('DD/MM/YYYY') === moment(Date.now()).format('DD/MM/YYYY')),
+    );
   }
 
   render() {
@@ -42,7 +66,9 @@ class Main extends Component {
           <header>
             <div className="main__info">
               <h1>Qual seu nível de estresse hoje? </h1>
-              <h3>{this.state.stressSelector}</h3>
+              <div className="main__status-container">
+                <h3>{this.state.stressSelector}</h3>
+              </div>
               <br />
               <div className="main__form">
                 <form id="main__buttons-stress">
@@ -60,19 +86,21 @@ class Main extends Component {
             </div>
           </header>
           <footer>
-            {/* <h5>{this.state.stress[0]}</h5> */}
+            {this.getCurrentStress() && this.getCurrentStress().description}
           </footer>
         </article>
         <article>
           <header>
             <div className="main__info">
               <h2>nível de estresses anteriores</h2>
-              { this.state.stress.map(stress => (
-                <div key={stress._id}>
+              { this.props.stresses.map(str => (
+                <div key={str._id} className="main__content">
                   <Link className="main__link" to="/stress">
-                    <div className="main__content">
-                      <h2>{moment(stress.date).format('DD/MM/YYYY')}</h2>
-                      <h2>{stress.status}</h2>
+                    <div onClick={() => this.handleCardClick(str)}>
+                      <div key={str._id} className="main__specific-content">
+                        <h2>{moment(str.date).format('DD/MM/YYYY')}</h2>
+                        <h2>{str.status}</h2>
+                      </div>
                     </div>
                   </Link>
                 </div>
@@ -85,4 +113,12 @@ class Main extends Component {
   }
 }
 
-export default Main;
+
+const mapStateToProps = state => (
+  {
+    stresses: state.stress.stresses,
+  });
+
+const mapDispatchToProps = dispatch => bindActionCreators(stressActions, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Main);

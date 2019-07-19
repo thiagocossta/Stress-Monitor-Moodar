@@ -1,11 +1,16 @@
+/* eslint-disable import/order */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/destructuring-assignment */
 import './Insert.css';
 
+import * as stressActions from '../../actions';
+
 import React, { Component } from 'react';
 
-import moment from 'moment';
 import api from '../../services/api';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import moment from 'moment';
 
 // eslint-disable-next-line react/prefer-stateless-function
 class Insert extends Component {
@@ -23,13 +28,16 @@ class Insert extends Component {
       data.append('status', this.state.status);
       data.append('date', moment(this.state.date).format('DD/MM/YYYY'));
       data.append('description', this.state.description);
-      await api.post('save', data);
-      this.props.history.push('/');
+
+      const result = await api.post('save', data);
+      if (result.status === 200) {
+        this.props.history.push('/');
+        this.props.addStress(result.data);
+      }
     }
 
     handleClick = (e) => {
-      this.state.status = e.target.value;
-      console.log(this.state.status);
+      this.setState({ status: e.target.value });
     }
 
     handleChange = (e) => {
@@ -42,6 +50,12 @@ class Insert extends Component {
           <h1>Cadastrar novo Mood</h1>
           <br />
           <h5>selecione seu nível de estresse, a data e uma descrição</h5>
+          <div className="stress-status-container">
+            <div className="stress-status">
+              <h2>{this.state.status}</h2>
+            </div>
+          </div>
+
           <form id="new-stress" onSubmit={this.handleSubmit}>
             <div className="form-button">
               <button name="status" type="button" value="0" onClick={this.handleClick}>0</button>
@@ -57,6 +71,7 @@ class Insert extends Component {
               name="date"
               placeholder="data"
               onChange={this.handleChange}
+              required
             />
 
             <input
@@ -64,6 +79,7 @@ class Insert extends Component {
               name="description"
               placeholder="description"
               onChange={this.handleChange}
+              required
             />
 
             <button type="submit">Cadastrar</button>
@@ -74,4 +90,6 @@ class Insert extends Component {
     }
 }
 
-export default Insert;
+const mapDispatchToProps = dispatch => bindActionCreators(stressActions, dispatch);
+
+export default connect(null, mapDispatchToProps)(Insert);

@@ -87,6 +87,13 @@ form#new-stress div button:focus {
   background: #f86565fb;
 }
 
+.stress-status-container {
+  display: flex;
+  text-align: center;
+  width: 100%;
+  display: flex;
+  padding-top: 10px;
+}
 
 .stress-container {
   width: 100%;
@@ -94,8 +101,19 @@ form#new-stress div button:focus {
   margin: 30px auto 0;
   padding: 30px;
   background: #fff;
+  align-content: center;
   border: 1px solid #ddd;
 
   display: flex;
   flex-direction: column;
+}
+
+.stress-status {
+  border: 2px solid rgba(127, 187, 255, 0.61);
+  border-radius: 50%;
+  margin: 0 auto;
+  width: 45px;
+  height: 45px;
+  padding-top: 7px;
+  display: inline-block;
 }

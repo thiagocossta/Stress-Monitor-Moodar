@@ -26,13 +26,17 @@ section#main__list article header .main__info {
 }
 
 section#main__list article header .main__content {
-  padding: 0 10px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  padding: 0 7px;
   margin-top: 15px;
   cursor: pointer;
   background-color: rgba(255, 162, 182, 0.521);
+}
+
+section#main__list article header .main__specific-content {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 auto;
+  padding-top: 6px;
 }
 
 form#main__buttons-stress {
@@ -57,10 +61,6 @@ form#main__buttons-stress button {
 form#main__buttons-stress button:hover {
   background: rgba(106, 178, 238, 0.623);
   color: rgba(0, 0, 0, 0.747);
-}
-
-h2 {
-  font-size: 22px;
 }
 
 form#main__buttons-stress div {
@@ -98,4 +98,19 @@ h1 {
 .main__link {
   text-decoration: none;
   color: rgb(68, 68, 68);
+}
+
+.main__status-container {
+  border: 2px solid rgba(127, 187, 255, 0.61);
+  border-radius: 50%;
+  margin: 0 auto;
+  margin-top: 10px;
+  width: 52px;
+  height: 52px;
+  padding-top: 6px;
+  display: inline-block;
+}
+
+h2 {
+  font-size: 22px;
 }
