@@ -19,7 +19,7 @@ export default function stresses(state = initialState, action) {
     case 'ADD_STRESS':
       return {
         ...state,
-        stresses: state.stresses.push(action.payload),
+        stresses: state.stresses.concat(action.payload),
       };
     case 'DELETE_STRESS':
       return {

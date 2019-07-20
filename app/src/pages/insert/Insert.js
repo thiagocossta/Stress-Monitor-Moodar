@@ -33,7 +33,7 @@ class Insert extends Component {
       const result = await api.post('save', data);
       if (result.status === 200) {
         this.props.history.push('/');
-        this.props.addStress(result.data);
+        await this.props.addStress(result.data);
       }
     }
 
@@ -91,6 +91,10 @@ class Insert extends Component {
     }
 }
 
+const mapStateToProps = state => ({
+  stress: state.stress.selectedStress,
+  stresses: state.stress.stresses,
+});
 const mapDispatchToProps = dispatch => bindActionCreators(stressActions, dispatch);
 
-export default connect(null, mapDispatchToProps)(Insert);
+export default connect(mapStateToProps, mapDispatchToProps)(Insert);

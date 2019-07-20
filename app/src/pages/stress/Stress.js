@@ -3,19 +3,23 @@
 
 import './Stress.css';
 
+
 import React, { Component } from 'react';
 
+import api from '../../services/api';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import moment from 'moment';
-import api from '../../services/api';
+import * as stressActions from '../../actions';
 
 // eslint-disable-next-line react/prefer-stateless-function
 class Stress extends Component {
   handleSubmit = async (id) => {
     const result = await api.delete(`/${id}/delete`, this.props.stress._id);
+    console.log(this.props);
     if (result.status === 200) {
       this.props.history.push('/');
-      this.props.stress.deleteStress(result.data._id);
+      this.props.deleteStress(result.data._id);
     }
   }
 
@@ -63,6 +67,9 @@ Deletar
 
 const mapStateToProps = state => ({
   stress: state.stress.selectedStress,
+  stresses: state.stress.stresses,
 });
 
-export default connect(mapStateToProps)(Stress);
+const mapDispatchToProps = dispatch => bindActionCreators(stressActions, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Stress);

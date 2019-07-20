@@ -62,6 +62,7 @@ class Main extends Component {
   // }
 
   render() {
+    console.log(this.props);
     return (
       <section id="main__list">
         <article>
@@ -116,10 +117,9 @@ class Main extends Component {
 }
 
 
-const mapStateToProps = state => (
-  {
-    stresses: state.stress.stresses,
-  });
+const mapStateToProps = state => ({
+  stresses: state.stress.stresses,
+});
 
 const mapDispatchToProps = dispatch => bindActionCreators(stressActions, dispatch);
 

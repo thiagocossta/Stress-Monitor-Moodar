@@ -94,7 +94,7 @@ async updateCurrentStatus(req, res) {
       try{
         const stress = await Stress.findByIdAndDelete(req.params.id);
         req.io.emit('stress', stress);
-        return res.send('deletado');
+        return res.json(stress);
       } catch (error) {
         return res.status(400).send({error: 'Error deleting patient'});
     }
