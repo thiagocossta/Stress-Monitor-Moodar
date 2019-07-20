@@ -1,0 +1,65 @@
+section#stress__container {
+  width: 100%;
+  max-width: 580px;
+  margin: 0 auto;
+  padding: 0 30px;
+}
+
+section#stress__container .stress__content {
+  background: #fff;
+  border: 1px solid #ddd;
+  margin-top: 35px;
+  font-size: 50px;
+}
+
+section#stress__container .stress__info {
+  margin-top: 10px;
+  text-align: center;
+}
+
+section#stress__container .stress__info-status {
+  border: 2px solid rgba(127, 187, 255, 0.61);
+  border-radius: 50%;
+  margin: 0 auto;
+  margin-top: 10px;
+  margin-bottom: 30px;
+  width: 54px;
+  height: 54px;
+  padding-top: 6px;
+  display: inline-block;
+}
+
+section#stress__container .stress__info-date {
+  background-color: rgba(255, 162, 182, 0.158);
+  display: inline-block;
+  padding: 10px;
+}
+
+section#stress__container div button {
+  padding: 8px 50px;
+  border-radius: 20px;
+  border: 1px solid gray;
+  background: rgba(255, 255, 255, 0.158);
+  color: rgb(138, 138, 138);
+  cursor: pointer;
+  font-size: 16px;
+  outline: none;
+}
+
+section#stress__container .stress__buttons {
+  display: flex;
+  justify-content: space-between;
+  padding-right: 70px;
+  padding-left: 70px;
+  padding-bottom: 15px;
+}
+
+section#stress__container .stress__e-button button:hover {
+  background: rgba(219, 219, 219, 0.329);
+  color: rgba(15, 15, 15, 0.747);
+}
+
+section#stress__container .stress__d-button button:hover {
+  background: rgba(248, 35, 35, 0.836);
+  color: rgba(255, 241, 241, 0.788);
+}

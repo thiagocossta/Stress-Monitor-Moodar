@@ -1,6 +1,7 @@
 /* eslint-disable import/order */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/destructuring-assignment */
+
 import './Insert.css';
 
 import * as stressActions from '../../actions';

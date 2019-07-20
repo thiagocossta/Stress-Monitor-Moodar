@@ -21,6 +21,11 @@ export default function stresses(state = initialState, action) {
         ...state,
         stresses: state.stresses.push(action.payload),
       };
+    case 'DELETE_STRESS':
+      return {
+        ...state,
+        stresses: state.stresses.filter(i => i !== action.payload),
+      };
     default:
       return state;
   }

@@ -1,15 +1,18 @@
-import { applyMiddleware, createStore } from 'redux';
+import { persistReducer, persistStore } from 'redux-persist';
 
-import ReduxThunk from 'redux-thunk';
+import { createStore } from 'redux';
+import storage from 'redux-persist/lib/storage';
 import Reducers from '../reducers';
 
-const createStoreWithMiddleware = applyMiddleware(ReduxThunk)(createStore);
-
-const configureStore = (initialState) => {
-  const store = createStoreWithMiddleware(Reducers, initialState);
-
-  return store;
+const persistConfig = {
+  key: 'stress',
+  storage,
 };
 
-const store = configureStore();
-export default store;
+const persistedReducer = persistReducer(persistConfig, Reducers);
+
+const store = createStore(persistedReducer);
+
+const persistor = persistStore(store);
+
+export { persistor, store };

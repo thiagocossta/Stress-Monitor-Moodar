@@ -12,3 +12,8 @@ export const addStress = stress => ({
   type: 'ADD_STRESS',
   payload: stress,
 });
+
+export const deleteStress = id => ({
+  type: 'DELETE_STRESS',
+  payload: id,
+});

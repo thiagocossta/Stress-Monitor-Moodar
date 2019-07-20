@@ -3,72 +3,101 @@ const moment = require('moment');
 
 module.exports = {
   async index(req, res) {
-      const stresses = await Stress.find().sort('-date');
-      req.io.emit('stress', stresses);
+      try{
+        const stresses = await Stress.find().sort('-date');
+        req.io.emit('stress', stresses);
 
-      return res.json(stresses); 
+        return res.json(stresses); 
+      } catch (error) {
+        return res.status(400).send({error: 'Error listing stresses'});
+    }
   },
 
   async getStress(req, res) {
-      const stress = await Stress.findById(req.params.id)
-      req.io.emit('stress', stress);
-      return res.json(stress);
+      try {
+        const stress = await Stress.findById(req.params.id)
+        req.io.emit('stress', stress);
+        return res.json(stress);
+      } catch (error) {
+        return res.status(400).send({error: 'Error getting stress'});
+      }
   },
   
   async store(req, res) {
-      const { status, date, description } = req.body;
+      try{
+        const { status, date, description } = req.body;
 
-      const stress = await Stress.create({
-          status,
-          date,
-          description,
-      });
-      await stress.save();
-      req.io.emit('stress', stress);
+        const stress = await Stress.create({
+            status,
+            date,
+            description,
+        });
+        await stress.save();
+        req.io.emit('stress', stress);
 
-      return res.json(stress);
+        return res.json(stress);
+        } catch (error) {
+            return res.status(400).send({error: 'Error creating stress'});
+        }
   },
 
   async updateStatus(req, res) {
-    const stress = await Stress.findByIdAndUpdate(
-        req.params.id, {
-             $set: { status: req.body.status 
-        }});
-        await stress.save();
-        req.io.emit('stress', stress);
-        return res.json(stress);
+      try{
+
+        const stress = await Stress.findByIdAndUpdate(
+            req.params.id, {
+                $set: { status: req.body.status 
+            }});
+            await stress.save();
+            req.io.emit('stress', stress);
+            return res.json(stress);
+        } catch (error) {
+            return res.status(400).send({error: 'Error updating status'});
+        }
   },
 
 async updateCurrentStatus(req, res) {
-    const stress = await Stress.findOne({
-        date: new moment(Date.now()).format('MM-DD-YYYY')}
-    );
-    await Stress.updateOne(
-        { _id: stress._id },
-   { $set:
-      {
-          status: req.body.value
-      }, 
-   }, { runValidators: true }
-    )
-        req.io.emit('stress', stress);
-        return res.json(stress);
+    try{
+        const stress = await Stress.findOne({
+            date: new moment(Date.now()).format('MM-DD-YYYY')}
+        );
+        await Stress.updateOne(
+            { _id: stress._id },
+    { $set:
+        {
+            status: req.body.value
+        }, 
+    }, { runValidators: true }
+        )
+            req.io.emit('stress', stress);
+            return res.json(stress);
+    }catch (error) {
+        return res.status(400).send({error: 'Error updating status'});
+}
   },
   
   async upDate(req, res) {
-    const stress = await Stress.findByIdAndUpdate(req.params.id, {
-        $set: { status: req.body.status, date: req.body.date, description: req.body.description
-        }});
+      try{
+        const stress = await Stress.findByIdAndUpdate(req.params.id, {
+            $set: { status: req.body.status, date: req.body.date, description: req.body.description
+            }});
 
-    await stress.save();
-    req.io.emit('stress', stress);
-    return res.json(stress);
+        await stress.save();
+        req.io.emit('stress', stress);
+        return res.json(stress);
+        } catch (error) {
+            return res.status(400).send({error: 'Error updating stress'});
+        }
   },
 
   async delete(req, res) {
-      const stress = await Stress.findByIdAndDelete(req.params.id);
-      req.io.emit('stress', stress);
-      return res.send('deletado');
+      try{
+        const stress = await Stress.findByIdAndDelete(req.params.id);
+        req.io.emit('stress', stress);
+        return res.send('deletado');
+      } catch (error) {
+        return res.status(400).send({error: 'Error deleting patient'});
+    }
   }
 };
 

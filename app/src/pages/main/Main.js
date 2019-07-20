@@ -5,6 +5,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable no-underscore-dangle */
+
 import './Main.css';
 
 import * as stressActions from '../../actions';
@@ -53,11 +54,12 @@ class Main extends Component {
     this.setState({ stressSelector: e.target.value });
   }
 
-  getCurrentStress = () => {
-    this.props.stresses.filter(
-      stress => (moment(stress.date).format('DD/MM/YYYY') === moment(Date.now()).format('DD/MM/YYYY')),
-    );
-  }
+  // getCurrentStress = () => {
+  //   this.props.stresses.filter(
+  // eslint-disable-next-line max-len
+  //   stress => (moment(stress.date).format('DD/MM/YYYY') === moment(Date.now()).format('DD/MM/YYYY')),
+  //   );
+  // }
 
   render() {
     return (
@@ -86,7 +88,7 @@ class Main extends Component {
             </div>
           </header>
           <footer>
-            {this.getCurrentStress() && this.getCurrentStress().description}
+            {/* {this.getCurrentStress() && this.getCurrentStress().description} */}
           </footer>
         </article>
         <article>
