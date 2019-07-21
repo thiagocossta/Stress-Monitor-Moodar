@@ -1,8 +1,8 @@
 const mongoose = require ('mongoose');
 
 const StressSchema = new mongoose.Schema({
-    status: Number,
-    date: Date,
+    status: Number, 
+    date: {type: Date, unique: true},
     description: String,
 }, {
     timestamps: true,

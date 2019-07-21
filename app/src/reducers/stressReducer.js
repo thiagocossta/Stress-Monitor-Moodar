@@ -26,6 +26,18 @@ export default function stresses(state = initialState, action) {
         ...state,
         stresses: state.stresses.filter(i => i !== action.payload),
       };
+    case 'UPDATE_STRESS':
+      return {
+        ...state,
+        stresses: [...state.stresses, action.payload],
+      };
+    case 'UPDATE_STATUS':
+    // const today = state.stresses.filter(i => i.date === Date.now());
+    // today[0].status = action.payload;
+      return {
+        ...state,
+        stresses: [...state.stresses, action.payload],
+      };
     default:
       return state;
   }

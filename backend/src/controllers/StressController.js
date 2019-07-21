@@ -6,7 +6,7 @@ module.exports = {
       try{
         const stresses = await Stress.find().sort('-date');
         req.io.emit('stress', stresses);
-
+        
         return res.json(stresses); 
       } catch (error) {
         return res.status(400).send({error: 'Error listing stresses'});
@@ -26,12 +26,13 @@ module.exports = {
   async store(req, res) {
       try{
         const { status, date, description } = req.body;
-
+        
         const stress = await Stress.create({
             status,
             date,
             description,
         });
+        
         await stress.save();
         req.io.emit('stress', stress);
 
@@ -47,7 +48,7 @@ module.exports = {
         const stress = await Stress.findByIdAndUpdate(
             req.params.id, {
                 $set: { status: req.body.status 
-            }});
+            }}, {new: true});
             await stress.save();
             req.io.emit('stress', stress);
             return res.json(stress);
@@ -59,20 +60,18 @@ module.exports = {
 async updateCurrentStatus(req, res) {
     try{
         const stress = await Stress.findOne({
-            date: new moment(Date.now()).format('MM-DD-YYYY')}
+            date: moment(Date.now()).format('MM-DD-YYYY')}
         );
-        await Stress.updateOne(
-            { _id: stress._id },
-    { $set:
-        {
-            status: req.body.value
-        }, 
-    }, { runValidators: true }
-        )
-            req.io.emit('stress', stress);
-            return res.json(stress);
+        var query = { status: stress.status }
+        stress = await Stress.findOneAndUpdate(
+          query, {
+              $set: { status: req.body.value 
+          }}, stress, {new: true});
+        await stress.save();
+        // req.io.emit('stress', stress);
+        return res.json(stress);
     }catch (error) {
-        return res.status(400).send({error: 'Error updating status'});
+        return res.status(400).send({error: 'Error AQUI status'});
 }
   },
   
@@ -80,11 +79,10 @@ async updateCurrentStatus(req, res) {
       try{
         const stress = await Stress.findByIdAndUpdate(req.params.id, {
             $set: { status: req.body.status, date: req.body.date, description: req.body.description
-            }});
+            }}, {new: true});
 
         await stress.save();
-        req.io.emit('stress', stress);
-        return res.json(stress);
+        return await res.json(stress);
         } catch (error) {
             return res.status(400).send({error: 'Error updating stress'});
         }

@@ -27,9 +27,9 @@ class Insert extends Component {
       const data = new FormData();
 
       data.append('status', this.state.status);
-      data.append('date', moment(this.state.date).format('DD/MM/YYYY'));
+      data.append('date', this.state.date);
       data.append('description', this.state.description);
-
+      console.log(...data);
       const result = await api.post('save', data);
       if (result.status === 200) {
         this.props.history.push('/');
@@ -37,12 +37,16 @@ class Insert extends Component {
       }
     }
 
+    handleDate = (e) => {
+      this.setState({ date: moment(e.target.value).format('MM/DD/YYYY') });
+    }
+
     handleClick = (e) => {
       this.setState({ status: e.target.value });
     }
 
     handleChange = (e) => {
-      this.setState({ [e.target.name]: e.target.value });
+      this.setState({ description: e.target.value });
     }
 
     render() {
@@ -58,7 +62,7 @@ class Insert extends Component {
           </div>
 
           <form id="new-stress" onSubmit={this.handleSubmit}>
-            <div className="form-button">
+            <div className="form-button" required>
               <button name="status" type="button" value="0" onClick={this.handleClick}>0</button>
               <button name="status" type="button" value="20" onClick={this.handleClick}>20</button>
               <button name="status" type="button" value="40" onClick={this.handleClick}>40</button>
@@ -71,7 +75,7 @@ class Insert extends Component {
               type="date"
               name="date"
               placeholder="data"
-              onChange={this.handleChange}
+              onChange={this.handleDate}
               required
             />
 
@@ -91,10 +95,6 @@ class Insert extends Component {
     }
 }
 
-const mapStateToProps = state => ({
-  stress: state.stress.selectedStress,
-  stresses: state.stress.stresses,
-});
 const mapDispatchToProps = dispatch => bindActionCreators(stressActions, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(Insert);
+export default connect(null, mapDispatchToProps)(Insert);

@@ -33,12 +33,22 @@ class Main extends Component {
     this.props.setStresses(result.data);
   }
 
+  // registerToSocket = () => {
+  //   const socket = io('http://localhost:3333');
+
+  //   socket.on('/'), (newStress) => {
+  //     this.setState({ });
+  //   };
+  // }
+
   handleSubmit = async (e) => {
     e.preventDefault();
     const data = new FormData();
     data.append('stressSelector', this.state.stressSelector);
 
-    await api.put('/updateCurrentStatus', data);
+    const stress = await api.put('/updateCurrentStatus', data);
+    console.log(stress);
+    this.props.updateStatus(stress);
   }
 
   handleCardClick = (stress) => {
@@ -54,15 +64,7 @@ class Main extends Component {
     this.setState({ stressSelector: e.target.value });
   }
 
-  // getCurrentStress = () => {
-  //   this.props.stresses.filter(
-  // eslint-disable-next-line max-len
-  //   stress => (moment(stress.date).format('DD/MM/YYYY') === moment(Date.now()).format('DD/MM/YYYY')),
-  //   );
-  // }
-
   render() {
-    console.log(this.props);
     return (
       <section id="main__list">
         <article>
@@ -73,7 +75,7 @@ class Main extends Component {
                 <h3>{this.state.stressSelector}</h3>
               </div>
               <br />
-              <div className="main__form">
+              <div className="main__form" onSubmit={this.handleSubmit}>
                 <form id="main__buttons-stress">
                   <div className="main__buttons">
                     <button name="status" type="button" id="button1" value="0" onClick={this.handleClick}>0</button>
@@ -83,24 +85,24 @@ class Main extends Component {
                     <button name="status" type="button" id="button5" value="80" onClick={this.handleClick}>80</button>
                     <button name="status" type="button" id="button6" value="100" onClick={this.handleClick}>100</button>
                   </div>
-                  <button type="submit" onClick={this.handleSubmit}>Confirmar</button>
+                  <button type="submit">Confirmar</button>
                 </form>
               </div>
             </div>
           </header>
           <footer>
-            {/* {this.getCurrentStress() && this.getCurrentStress().description} */}
+            <h3>descrição</h3>
           </footer>
         </article>
         <article>
           <header>
             <div className="main__info">
-              <h2>nível de estresses anteriores</h2>
+              <h2>níveis de estresse cadastrados</h2>
               { this.props.stresses.map(str => (
                 <div key={str._id} className="main__content">
                   <Link className="main__link" to="/stress">
                     <div onClick={() => this.handleCardClick(str)}>
-                      <div key={str._id} className="main__specific-content">
+                      <div className="main__specific-content">
                         <h2>{moment(str.date).format('DD/MM/YYYY')}</h2>
                         <h2>{str.status}</h2>
                       </div>

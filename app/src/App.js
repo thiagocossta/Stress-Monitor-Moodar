@@ -1,10 +1,10 @@
+import { persistor, store } from './store';
 
 import { BrowserRouter } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import { PersistGate } from 'redux-persist/integration/react';
 import { Provider } from 'react-redux';
 import React from 'react';
-import { persistor, store } from './store';
 import Routes from './routes';
 
 function App() {
