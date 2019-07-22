@@ -15,7 +15,9 @@ module.exports = {
 
   async getStress(req, res) {
       try {
-        const stress = await Stress.findById(req.params.id)
+        const stress = await Stress.findOne({
+          date: moment(Date.now()).format('MM-DD-YYYY')}
+      );
         req.io.emit('stress', stress);
         return res.json(stress);
       } catch (error) {
@@ -62,13 +64,11 @@ async updateCurrentStatus(req, res) {
         const stress = await Stress.findOne({
             date: moment(Date.now()).format('MM-DD-YYYY')}
         );
-        var query = { status: stress.status }
-        stress = await Stress.findOneAndUpdate(
-          query, {
-              $set: { status: req.body.value 
-          }}, stress, {new: true});
+        await Stress.updateOne(
+          { _id: stress._id }, { $set: { status: req.body.status
+           }},{new:true});
         await stress.save();
-        // req.io.emit('stress', stress);
+        req.io.emit('stress', stress);
         return res.json(stress);
     }catch (error) {
         return res.status(400).send({error: 'Error AQUI status'});

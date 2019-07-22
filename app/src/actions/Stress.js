@@ -22,8 +22,3 @@ export const updateStress = stress => ({
   type: 'UPDATE_STRESS',
   payload: stress,
 });
-
-export const updateStatus = stress => ({
-  type: 'UPDATE_STATUS',
-  payload: stress,
-});

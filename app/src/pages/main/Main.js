@@ -20,35 +20,40 @@ import moment from 'moment';
 
 class Main extends Component {
   state = {
-    stressSelector: 0,
+    status: 0,
   };
-
-  // constructor(props) {
-  //   super(props);
-  //   console.log(props);
-  // }
 
   async componentDidMount() {
     const result = await api.get('/');
-    this.props.setStresses(result.data);
+    await this.props.setStresses(result.data);
   }
-
-  // registerToSocket = () => {
-  //   const socket = io('http://localhost:3333');
-
-  //   socket.on('/'), (newStress) => {
-  //     this.setState({ });
-  //   };
-  // }
 
   handleSubmit = async (e) => {
     e.preventDefault();
     const data = new FormData();
-    data.append('stressSelector', this.state.stressSelector);
+    const stress = await api.get('/get');
+    if (stress.data) {
+      stress.data.status = this.state.status;
 
-    const stress = await api.put('/updateCurrentStatus', data);
-    console.log(stress);
-    this.props.updateStatus(stress);
+      data.append('status', stress.data.status);
+      data.append('date', stress.data.date);
+      data.append('description', stress.data.description);
+      await api.put(`/${stress.data._id}/put`, data);
+      await this.props.deleteStress(stress.data._id);
+      await this.props.addStress(stress.data);
+    } else {
+      data.append('status', this.state.status);
+      data.append('date', moment(Date.now()).format('MM/DD/YYYY'));
+      data.append('description', 'edite sua descrição');
+      const result = await api.post('save', data);
+
+      if (result.status === 200) {
+        this.props.history.push('/');
+        await this.props.addStress(result.data);
+        const arr = await api.get('/');
+        await this.props.setStresses(arr.data);
+      }
+    }
   }
 
   handleCardClick = (stress) => {
@@ -56,12 +61,8 @@ class Main extends Component {
     this.props.history.push('/stress');
   };
 
-  handleChange = (e) => {
-    this.setState({ stressSelector: e.target.stressSelector });
-  }
-
   handleClick = (e) => {
-    this.setState({ stressSelector: e.target.value });
+    this.setState({ status: e.target.value });
   }
 
   render() {
@@ -72,7 +73,7 @@ class Main extends Component {
             <div className="main__info">
               <h1>Qual seu nível de estresse hoje? </h1>
               <div className="main__status-container">
-                <h3>{this.state.stressSelector}</h3>
+                <h3>{this.state.status}</h3>
               </div>
               <br />
               <div className="main__form" onSubmit={this.handleSubmit}>
@@ -91,7 +92,7 @@ class Main extends Component {
             </div>
           </header>
           <footer>
-            <h3>descrição</h3>
+            <h3>{}</h3>
           </footer>
         </article>
         <article>
@@ -121,6 +122,7 @@ class Main extends Component {
 
 const mapStateToProps = state => ({
   stresses: state.stress.stresses,
+  stress: state.stress.selectedStress,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators(stressActions, dispatch);

@@ -8,11 +8,7 @@ import 'mdbreact/dist/css/mdb.css';
 import App from './App';
 import React from 'react';
 import ReactDOM from 'react-dom';
-
 // eslint-disable-next-line import/no-extraneous-dependencies
-
-
 // eslint-disable-next-line import/no-extraneous-dependencies
-
 
 ReactDOM.render(<App />, document.getElementById('root'));

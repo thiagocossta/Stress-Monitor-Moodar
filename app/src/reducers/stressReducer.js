@@ -1,3 +1,4 @@
+/* eslint-disable no-case-declarations */
 const initialState = {
   stresses: [],
   selectedStress: null,
@@ -27,16 +28,10 @@ export default function stresses(state = initialState, action) {
         stresses: state.stresses.filter(i => i !== action.payload),
       };
     case 'UPDATE_STRESS':
+      const arr = state.stresses.filter(i => i !== action.payload);
       return {
         ...state,
-        stresses: [...state.stresses, action.payload],
-      };
-    case 'UPDATE_STATUS':
-    // const today = state.stresses.filter(i => i.date === Date.now());
-    // today[0].status = action.payload;
-      return {
-        ...state,
-        stresses: [...state.stresses, action.payload],
+        stresses: [...arr, action.payload],
       };
     default:
       return state;

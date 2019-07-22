@@ -6,7 +6,7 @@ const StressController = require('./controllers/StressController');
 const upload = multer();
 
 routes.get('/', StressController.index);
-routes.get('/:id/get', StressController.getStress);
+routes.get('/get', StressController.getStress);
 routes.post('/save', upload.single() ,StressController.store);
 routes.put('/:id/updateStatus', upload.single('status'), StressController.updateStatus);
 routes.put('/:id/put', upload.single(), StressController.upDate);

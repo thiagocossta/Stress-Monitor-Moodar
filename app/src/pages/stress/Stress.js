@@ -1,8 +1,11 @@
+/* eslint-disable import/order */
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/prop-types */
 
 import './Stress.css';
 
+import * as stressActions from '../../actions';
 
 import React, { Component } from 'react';
 
@@ -11,7 +14,6 @@ import api from '../../services/api';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import moment from 'moment';
-import * as stressActions from '../../actions';
 
 // eslint-disable-next-line react/prefer-stateless-function
 class Stress extends Component {
